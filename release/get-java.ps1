@@ -1,4 +1,4 @@
-# Java Installer for OpenJDK 16.0.1
+# Java Installer for OpenJDK 11.0.11
 
 
 param (
@@ -15,51 +15,51 @@ $ErrorActionPreference = "Stop"
 
 Switch ("$os $arch $type") {
 	"Linux x86_64 jdk" {
-		$JDK_URL = "https://download.java.net/java/GA/jdk16.0.1/7147401fd7354114ac51ef3e1328291f/9/GPL/openjdk-16.0.1_linux-x64_bin.tar.gz"
-		$JDK_SHA256 = "b1198ffffb7d26a3fdedc0fa599f60a0d12aa60da1714b56c1defbce95d8b235"
+		$JDK_URL = "@{jdk.linux.x64.url}"
+		$JDK_SHA256 = "@{jdk.linux.x64.sha256}"
 	}
 	"Linux i686 jdk" {
-		$JDK_URL = "https://download.bell-sw.com/java/16.0.1+9/bellsoft-jdk16.0.1+9-linux-i586.tar.gz"
-		$JDK_SHA256 = "a33a9b92380759e0e9efc6f3f08cf403cd9dfa4b3fbdefe77bbee67b431b3370"
+		$JDK_URL = "@{jdk.linux.x86.url}"
+		$JDK_SHA256 = "@{jdk.linux.x86.sha256}"
 	}
 	"Linux aarch64 jdk" {
-		$JDK_URL = "https://download.bell-sw.com/java/16.0.1+9/bellsoft-jdk16.0.1+9-linux-aarch64.tar.gz"
-		$JDK_SHA256 = "650f04865bdd3267ab7d1ae459dc34a430b6b6c2c6f04c479f01c728717bda48"
+		$JDK_URL = "@{jdk.linux.aarch64.url}"
+		$JDK_SHA256 = "@{jdk.linux.aarch64.sha256}"
 	}
 	"Linux armv7l jdk" {
-		$JDK_URL = "https://download.bell-sw.com/java/16.0.1+9/bellsoft-jdk16.0.1+9-linux-arm32-vfp-hflt.tar.gz"
-		$JDK_SHA256 = "3b701e52122419e6dd66e1086a2cba7613d63e6fd9073afcce1dfe7e9f1404b7"
+		$JDK_URL = "@{jdk.linux.armv7l.url}"
+		$JDK_SHA256 = "@{jdk.linux.armv7l.sha256}"
 	}
 	"Linux ppc64le jdk" {
-		$JDK_URL = "https://download.bell-sw.com/java/16.0.1+9/bellsoft-jdk16.0.1+9-linux-ppc64le.tar.gz"
-		$JDK_SHA256 = "197b45dd685212307fa8affa9bdba0549b826dcafd770e4b20c2feaffd4b787b"
+		$JDK_URL = "@{jdk.linux.ppc64le.url}"
+		$JDK_SHA256 = "@{jdk.linux.ppc64le.sha256}"
 	}
 
 	"Darwin x86_64 jdk" {
-		$JDK_URL = "https://download.java.net/java/GA/jdk16.0.1/7147401fd7354114ac51ef3e1328291f/9/GPL/openjdk-16.0.1_osx-x64_bin.tar.gz"
-		$JDK_SHA256 = "6098f839954439d4916444757c542c1b8778a32461706812d41cc8bbefce7f2f"
+		$JDK_URL = "@{jdk.mac.x64.url}"
+		$JDK_SHA256 = "@{jdk.mac.x64.sha256}"
 	}
 
 	"Windows x86_64 jdk" {
-		$JDK_URL = "https://download.java.net/java/GA/jdk16.0.1/7147401fd7354114ac51ef3e1328291f/9/GPL/openjdk-16.0.1_windows-x64_bin.zip"
-		$JDK_SHA256 = "733b45b09463c97133d70c2368f1b9505da58e88f2c8a84358dd4accfd06a7a4"
+		$JDK_URL = "@{jdk.windows.x64.url}"
+		$JDK_SHA256 = "@{jdk.windows.x64.sha256}"
 	}
 	"Windows x86 jdk" {
-		$JDK_URL = "https://download.bell-sw.com/java/16.0.1+9/bellsoft-jdk16.0.1+9-windows-i586.zip"
-		$JDK_SHA256 = "429c96779a94a7e9e266acc304c77e79c5524f4d7c1410c62869e1720459e7c7"
+		$JDK_URL = "@{jdk.windows.x86.url}"
+		$JDK_SHA256 = "@{jdk.windows.x86.sha256}"
 	}
 
 	"Linux x86_64 jfx" {
-		$JDK_URL = "https://download2.gluonhq.com/openjfx/16/openjfx-16_linux-x64_bin-jmods.zip"
-		$JDK_SHA256 = "6d9d974119efafc9d3634c588dc4c94315db76d41693d09470b43922557bcfb4"
+		$JDK_URL = "@{jfx.linux.x64.url}"
+		$JDK_SHA256 = "@{jfx.linux.x64.sha256}"
 	}
 	"Darwin x86_64 jfx" {
-		$JDK_URL = "https://download2.gluonhq.com/openjfx/16/openjfx-16_osx-x64_bin-jmods.zip"
-		$JDK_SHA256 = "054f850ed72a959f524ffa2adbbf7aa13292d85f1e09f414a754e6d40e43ecbc"
+		$JDK_URL = "@{jfx.mac.x64.url}"
+		$JDK_SHA256 = "@{jfx.mac.x64.sha256}"
 	}
 	"Windows x86_64 jfx" {
-		$JDK_URL = "https://download2.gluonhq.com/openjfx/16/openjfx-16_windows-x64_bin-jmods.zip"
-		$JDK_SHA256 = "29b5b3086a03e4d991be761be887d6a878cdc5edeab896d9f2e0587a97f7f03f"
+		$JDK_URL = "@{jfx.windows.x64.url}"
+		$JDK_SHA256 = "@{jfx.windows.x64.sha256}"
 	}
 
 	default {

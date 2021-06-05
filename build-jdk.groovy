@@ -6,7 +6,10 @@ def openjdk = [
 	[os: 'linux',   arch: 'aarch64', pkg: 'linux-aarch64_bin.tar.gz']
 ]
 
-
+// AdoptOpenJDK for jdk
+def adoptopenjdk = [
+	[type: 'jdk', os: 'linux',   arch: 'arm',  pkg: 'tar.gz']
+]
 // BellSoft Liberica JDK for embedded devices
 def liberica = [
 	[type: 'jdk', os: 'linux',   arch: 'armv7l',  pkg: 'linux-arm32-vfp-hflt.tar.gz'],
@@ -26,8 +29,11 @@ def javafx = [
 
 // General Build Properties
 def name = properties.product
-def version = properties.release
+//def version = properties.release
 
+def (version, build) = properties.release.tokenize(/[+]/)
+def (major, minor, update) = version.tokenize(/[.]/)
+def uuid = properties.uuid
 
 def sha256(url) {
 	try {
@@ -53,36 +59,17 @@ ant.propertyfile(file: 'build-jdk.properties', comment: "${name} ${version} bina
 	entry(key: 'jdk.name', value: name)
 	entry(key: 'jdk.version', value: version)
 
-	openjdk.each{ jdk ->
-		def build = properties.openjdk_build
+https://github.com/AdoptOpenJDK/openjdknull-binaries/releases/download/jdk-11.0.11+null/OpenJDKnullU-jdk_arm_linux_hotspot_11.0.11_null.tar.gz.sha256
+https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.11%2B9/OpenJDK11U-jre_arm_linux_hotspot_11.0.11_9.tar.gz
+adoptopenjdk.each{ jdk ->
 		jdk.with {
-			def url = "https://download.java.net/java/GA/jdk${version}/${build}/GPL/openjdk-${version}_${pkg}"
+			def url = "https://github.com/AdoptOpenJDK/openjdk${major}-binaries/releases/download/jdk-${version}+${build}/OpenJDK${major}U-${type}_${arch}_${os}_hotspot_${version}_${build}.${pkg}"
 			def checksum = sha256(url)
 
 			entry(key:"jdk.${os}.${arch}.url", value: url)
 			entry(key:"jdk.${os}.${arch}.sha256", value: checksum)
 		}
-	}
 
-	liberica.each{ jdk ->
-		def build = properties.liberica_build
-		jdk.with {
-			def url = "https://download.bell-sw.com/java/${build}/bellsoft-${type}${build}-${pkg}"
-			def checksum = sha256(url)
 
-			entry(key:"${type}.${os}.${arch}.url", value: url)
-			entry(key:"${type}.${os}.${arch}.sha256", value: checksum)
-		}
-	}
-
-	javafx.each{ jfx ->
-		def build = properties.openjfx_build
-		jfx.with {
-			def url = "https://download2.gluonhq.com/openjfx/${build}/openjfx-${build}_${pkg}"
-			def checksum = sha256(url)
-
-			entry(key:"jfx.${os}.${arch}.url", value: url)
-			entry(key:"jfx.${os}.${arch}.sha256", value: checksum)
-		}
 	}
 }
