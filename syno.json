@@ -2,8 +2,8 @@
     "packages": [
         {
             "package": "java-installer",
-            "version": "2.16",
-            "dname": "Java Installer",
+            "version": "1.00",
+            "dname": "Java11 Installer",
             "desc": "Java Installer will help you install and update Java. Supported platforms include armv7l, aarch64, i586 and x86_64 models. During the install, this package will download the latest OpenJDK binaries (180 MB) for your platform. This may take a while.",
             "maintainer": "rednoah",
             "maintainer_url": "https://github.com/rednoah/java-installer",

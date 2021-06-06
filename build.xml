@@ -32,11 +32,11 @@
 		<syno:spk destdir="${dir.build}" name="${package}" version="${version}" arch="noarch" compression="xz">
 			<info name="displayname" value="${title}" />
 			<info name="description" value="${description}" />
-			<info name="maintainer" value="rednoah" />
-			<info name="maintainer_url" value="https://github.com/rednoah/java-installer" />
-			<info name="distributor" value="rednoah" />
-			<info name="distributor_url" value="https://github.com/rednoah/java-installer" />
-			<info name="support_url" value="https://github.com/rednoah/java-installer/issues" />
+			<info name="maintainer" value="eric-auguie" />
+			<info name="maintainer_url" value="https://github.com/eric-auguie/java-installer" />
+			<info name="distributor" value="eric-auguie" />
+			<info name="distributor_url" value="https://github.com/eric-auguie/java-installer" />
+			<info name="support_url" value="https://github.com/eric-auguie/java-installer/issues" />
 			<info name="ctl_stop" value="no" />
 			<info name="silent_install" value="no" />
 			<info name="silent_upgrade" value="yes" />
@@ -59,7 +59,7 @@
 	<target name="syno-repo" description="Update Synology Package Source (DSM 6.2.4)" depends="stats">
 		<syno:package-source file="${basedir}/syno.json">
 			<spk file="${dir.dist}/${package}_${version}.spk">
-				<info name="link" value="https://github.com/rednoah/java-installer/releases/download/${version}/${package}_${version}.spk" />
+				<info name="link" value="https://github.com/eric-auguie/java-installer/releases/download/${version}/${package}_${version}.spk" />
 				<info name="download_count" value="${download_count}" />
 				<thumbnail url="https://www.filebot.net/syno/java-installer-thumbnail.png" />
 			</spk>
@@ -74,11 +74,11 @@
 		<syno:spk destdir="${dir.build}" name="${package}" version="${version}" arch="noarch" compression="xz">
 			<info name="displayname" value="${title}" />
 			<info name="description" value="${description}" />
-			<info name="maintainer" value="rednoah" />
-			<info name="maintainer_url" value="https://github.com/rednoah/java-installer" />
-			<info name="distributor" value="rednoah" />
-			<info name="distributor_url" value="https://github.com/rednoah/java-installer" />
-			<info name="support_url" value="https://github.com/rednoah/java-installer/issues" />
+			<info name="maintainer" value="eric-auguie" />
+			<info name="maintainer_url" value="https://github.com/eric-auguie/java-installer" />
+			<info name="distributor" value="eric-auguie" />
+			<info name="distributor_url" value="https://github.com/eric-auguie/java-installer" />
+			<info name="support_url" value="https://github.com/eric-auguie/java-installer/issues" />
 			<info name="ctl_stop" value="no" />
 			<info name="silent_install" value="no" />
 			<info name="silent_upgrade" value="yes" />
@@ -99,36 +99,8 @@
 	</target>
 
 
-	<target name="syno-repo-dsm7" description="Update Synology Package Source (DSM 7)" depends="stats">
-		<syno:package-source file="${basedir}/syno-dsm7.json">
-			<spk file="${dir.dist}/${package}_${version}-dsm7.spk">
-				<info name="link" value="https://github.com/rednoah/java-installer/releases/download/${version}/${package}_${version}-dsm7.spk" />
-				<info name="download_count" value="${download_count}" />
-				<thumbnail url="https://www.filebot.net/syno/java-installer-thumbnail.png" />
-			</spk>
-		</syno:package-source>
-	</target>
 
 
-	<target name="qpkg" description="Build QNAP Package" depends="branch">
-		<copy-replace todir="${dir.build}/qnap">
-			<fileset dir="${dir.package}/qnap">
-				<include name="**/*_routines" />
-				<include name="**/*.sh" />
-				<include name="**/*.cfg" />
-				<include name="**/*.png" />
-				<include name="**/private_key" />
-				<include name="**/certificate" />
-			</fileset>
-		</copy-replace>
-
-		<copy file="${dir.package}/gpg/maintainer.gpg" todir="${dir.build}/qnap/shared" />
-
-		<exec executable="docker" failonerror="yes">
-			<arg line="run --rm -v ${dir.build}/qnap:/src rednoah/qpkg-build" />
-		</exec>
-		<copy file="${dir.build}/qnap/build/${package}_${version}.qpkg" tofile="${dir.dist}/${package}_${version}.qpkg" />
-	</target>
 
 
 	<target name="build">
