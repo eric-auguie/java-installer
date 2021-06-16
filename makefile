@@ -5,8 +5,11 @@ update:
 	$(ANT) update-jdk
 	$(ANT) build
 
-pkg:
-	$(ANT) clean spk-dsm7 syno-repo-dsm7 spk syno-repo qpkg
+pkg:	
+	$(ANT) resolve
+	$(ANT) update-jdk
+	$(ANT) build
+	$(ANT) clean spk
 
 clean:
 	git reset --hard
