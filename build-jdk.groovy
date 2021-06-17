@@ -8,7 +8,8 @@ def openjdk = [
 
 // AdoptOpenJDK for jdk
 def adoptopenjdk = [
-	[type: 'jdk', os: 'linux',   arch: 'arm',  pkg: 'tar.gz']
+	[type: 'jdk', os: 'linux',   arch: 'arm',  pkg: 'tar.gz'],
+	[type: 'jdk', os: 'linux',   arch: 'arm7l',  pkg: 'tar.gz']
 ]
 // BellSoft Liberica JDK for embedded devices
 def liberica = [
@@ -59,8 +60,6 @@ ant.propertyfile(file: 'build-jdk.properties', comment: "${name} ${version} bina
 	entry(key: 'jdk.name', value: name)
 	entry(key: 'jdk.version', value: version)
 
-https://github.com/AdoptOpenJDK/openjdknull-binaries/releases/download/jdk-11.0.11+null/OpenJDKnullU-jdk_arm_linux_hotspot_11.0.11_null.tar.gz.sha256
-https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.11%2B9/OpenJDK11U-jre_arm_linux_hotspot_11.0.11_9.tar.gz
 adoptopenjdk.each{ jdk ->
 		jdk.with {
 			def url = "https://github.com/AdoptOpenJDK/openjdk${major}-binaries/releases/download/jdk-${version}+${build}/OpenJDK${major}U-${type}_${arch}_${os}_hotspot_${version}_${build}.${pkg}"

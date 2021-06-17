@@ -6,10 +6,11 @@ update:
 	$(ANT) build
 
 pkg:	
+	$(ANT) clean
 	$(ANT) resolve
 	$(ANT) update-jdk
 	$(ANT) build
-	$(ANT) clean spk
+	$(ANT) spk
 
 clean:
 	git reset --hard

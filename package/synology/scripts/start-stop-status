@@ -2,41 +2,26 @@
 
 INSTALLER_SCRIPT="get-java.sh"
 INSTALLER_FILE="$SYNOPKG_PKGDEST/$INSTALLER_SCRIPT"
-INSTALLER_URL="https://raw.githubusercontent.com/rednoah/java-installer/@{branch}/release/$INSTALLER_SCRIPT"
+INSTALLER_URL="https://raw.githubusercontent.com/eric-auguie/java-installer/@{branch}/release/$INSTALLER_SCRIPT"
 SIGNATURE_FILE="$INSTALLER_FILE.asc"
 SIGNATURE_URL="$INSTALLER_URL.asc"
 
-SIGNATURE_PUBLIC_KEY="$SYNOPKG_PKGDEST/maintainer.gpg"
+SIGNATURE_PUBLIC_KEY="$SYNOPKG_PKGDEST/eric.keyring"
 PKG_LOG="$SYNOPKG_PKGDEST/install-java.log"
 
 
 case "$1" in
 	install)
-		curl -L -o "$SIGNATURE_FILE.latest" -z "$SIGNATURE_FILE" "$SIGNATURE_URL"
-
-		# update timestamp
-		touch "$SIGNATURE_FILE"
-
-		# check if signature file has changed, since GitHub doesn't support If-Modified-Since HTTP requests
-		if cmp "$SIGNATURE_FILE.latest" "$SIGNATURE_FILE"; then
-			echo "$(date): NO UPDATE"
-			exit 0
-		else
-			echo "$(date): AUTO UPDATE"
-			mv "$SIGNATURE_FILE.latest" "$SIGNATURE_FILE"
-		fi
 
 		# fetch installer
-		curl -L -o "$INSTALLER_FILE" -z "$INSTALLER_FILE" "$INSTALLER_URL"
-
 		if gpgv --keyring "$SIGNATURE_PUBLIC_KEY" "$SIGNATURE_FILE" "$INSTALLER_FILE"; then
 			cd "$SYNOPKG_PKGDEST"
 			# fetch java binaries
 			chmod +x "$INSTALLER_FILE" && "$INSTALLER_FILE" fetch jdk
 			# remove existing java binaries
-			rm -rv bin include jmods lib conf legal man
+			#rm -rv bin include jmods lib conf legal man
 			# extract java binaries
-			tar --strip-components=1 -vxzf *.tar.gz && rm -v *.tar.gz
+			#tar --strip-components=1 -vxzf *.tar.gz && rm -v *.tar.gz
 		fi
 
 		# make sure that `java` is working
@@ -51,6 +36,7 @@ case "$1" in
 		else
 			# display error message
 			echo "Ooops, something went wrong... Run <kbd>cat $PKG_LOG</kbd> for details." >> "$SYNOPKG_TEMP_LOGFILE"
+			exit 150 # package is broken and should be reinstalled
 		fi
 		exit 0
 	;;
