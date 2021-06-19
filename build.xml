@@ -29,10 +29,7 @@
 		<copy-replace todir="${dir.build}/spk">
 			<fileset dir="${dir.package}/synology" />
 		</copy-replace>
-		<!--<copy-replace todir="${dir.build}/spk">
-			<fileset dir="${dir.release}" />
-		</copy-replace>
-		<copy file="${basedir}/build-jdk.properties" tofile="${dir.build}/spk/build-jdk.properties" />-->
+
 		<syno:spk destdir="${dir.build}" name="${package}" version="${version}" arch="noarch" compression="xz">
 			<info name="displayname" value="${title}" />
 			<info name="description" value="${description}" />
