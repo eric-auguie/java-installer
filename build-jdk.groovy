@@ -8,8 +8,8 @@ def openjdk = [
 
 // AdoptOpenJDK for jdk
 def adoptopenjdk = [
-	[type: 'jdk', os: 'linux',   arch: 'arm',  pkg: 'tar.gz'],
-	[type: 'jdk', os: 'linux',   arch: 'arm7l',  pkg: 'tar.gz']
+	[type: 'jdk', os: 'linux',   arch: 'arm7l',  pkg: 'tar.gz'],
+	[type: 'jdk', os: 'linux',   arch: 'arm',  pkg: 'tar.gz']
 ]
 // BellSoft Liberica JDK for embedded devices
 def liberica = [
@@ -62,7 +62,7 @@ ant.propertyfile(file: 'build-jdk.properties', comment: "${name} ${version} bina
 
 adoptopenjdk.each{ jdk ->
 		jdk.with {
-			def url = "https://github.com/AdoptOpenJDK/openjdk${major}-binaries/releases/download/jdk-${version}+${build}/OpenJDK${major}U-${type}_${arch}_${os}_hotspot_${version}_${build}.${pkg}"
+			def url = "https://github.com/AdoptOpenJDK/openjdk${major}-binaries/releases/download/jdk-${version}+${build}/OpenJDK${major}U-${type}_arm_${os}_hotspot_${version}_${build}.${pkg}"
 			def checksum = sha256(url)
 
 			entry(key:"jdk.${os}.${arch}.url", value: url)

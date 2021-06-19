@@ -2,9 +2,7 @@
 <project name="java-installer" default="spk"  xmlns:syno="antlib:net.filebot.ant.spk">
 	<property file="package.properties" />
 	<property file="profile.properties" />
-
 	<property file="build-jdk.properties" />
-
 	<property name="dir.source" location="${basedir}/src" />
 	<property name="dir.lib" location="${basedir}/lib" />
 	<property name="dir.build" location="${basedir}/build" />
@@ -12,7 +10,7 @@
 	<property name="dir.package" location="${basedir}/package" />
 	<property name="dir.release" location="${basedir}/release" />
 	
- <taskdef name="ivy-configure" classname="org.apache.ivy.ant.IvyConfigure"/>
+  <taskdef name="ivy-configure" classname="org.apache.ivy.ant.IvyConfigure"/>
   <taskdef name="ivy-resolve" classname="org.apache.ivy.ant.IvyResolve"/>
   <taskdef name="ivy-retrieve" classname="org.apache.ivy.ant.IvyRetrieve"/>
   <taskdef name="ivy-publish" classname="org.apache.ivy.ant.IvyPublish"/> 
@@ -25,13 +23,16 @@
 	</target>
 
 	<target name="spk" description="Build Synology Package (DSM 6.2.4)" depends="branch">
+		<copy-replace todir="${dir.release}">
+			<fileset dir="${dir.source}" />
+		</copy-replace>
 		<copy-replace todir="${dir.build}/spk">
 			<fileset dir="${dir.package}/synology" />
 		</copy-replace>
-		<copy-replace todir="${dir.build}/spk">
+		<!--<copy-replace todir="${dir.build}/spk">
 			<fileset dir="${dir.release}" />
 		</copy-replace>
-		<copy file="${basedir}/build-jdk.properties" tofile="${dir.build}/spk/build-jdk.properties" />
+		<copy file="${basedir}/build-jdk.properties" tofile="${dir.build}/spk/build-jdk.properties" />-->
 		<syno:spk destdir="${dir.build}" name="${package}" version="${version}" arch="noarch" compression="xz">
 			<info name="displayname" value="${title}" />
 			<info name="description" value="${description}" />
@@ -53,9 +54,8 @@
 			<conf dir="${dir.build}/spk/conf" />
 			<scripts dir="${dir.build}/spk/scripts" filemode="755" />
 			<package dir="${dir.build}/spk/target" filemode="755" />
-			<package file="${dir.build}/spk/get-java.sh.asc" />
-			<package file="${dir.build}/spk/get-java.sh" />
-			<package file="${dir.build}/spk/build-jdk.properties" />
+			<package file="${dir.release}/get-java.sh.asc" />
+			<package file="${dir.release}/get-java.sh" />
 			<package file="${dir.package}/gpg/eric.keyring" />
 		</syno:spk>
 		<copy file="${dir.build}/${package}-${version}-noarch.spk" tofile="${dir.dist}/${package}_${version}.spk" />
@@ -87,6 +87,7 @@
 	<target name="clean">
 		<delete dir="${dir.build}" />
 		<delete dir="${dir.dist}" />
+		<delete dir="${dir.release}" />
 	</target>
 
 
@@ -96,10 +97,6 @@
 		<groovy src="build-jdk.groovy" />
 	</target>
 
-
-	<target name="stats">
-		<groovy src="build-jdk-stats.groovy" />
-	</target>
 
 
 	<target name="branch">
