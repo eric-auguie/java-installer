@@ -23,13 +23,9 @@
 	</target>
 
 	<target name="spk" description="Build Synology Package (DSM 6.2.4)" depends="branch">
-		<copy-replace todir="${dir.release}">
-			<fileset dir="${dir.source}" />
-		</copy-replace>
 		<copy-replace todir="${dir.build}/spk">
 			<fileset dir="${dir.package}/synology" />
 		</copy-replace>
-
 		<syno:spk destdir="${dir.build}" name="${package}" version="${version}" arch="noarch" compression="xz">
 			<info name="displayname" value="${title}" />
 			<info name="description" value="${description}" />
@@ -67,9 +63,9 @@
 
 
 	<target name="build">
-		<copy-replace todir="${dir.release}">
+	<!--	<copy-replace todir="${dir.release}">
 			<fileset dir="${dir.source}" />
-		</copy-replace>
+		</copy-replace>-->
 
 		<chmod perm="+x" type="file">
 			<fileset dir="${dir.release}" includes="*.sh, *.ps1" />
@@ -102,6 +98,28 @@
 		</exec>
 		<echo>Branch: ${branch}</echo>
 	</target>
+
+
+
+
+
+
+
+    <!-- File to Load/ Accessable -->
+    <target name="replaceTokens">
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <pathelement location="${dir.lib}/ant-contrib-1.0b3.jar" />
+            </classpath>
+        </taskdef>
+            <mkdir dir="${dir.release}"/>
+            <filter filtersfile="${basedir}/build-jdk.properties" />
+            <copy todir="${dir.release}" filtering="true" overwrite="true">
+                <fileset dir="${dir.source}">
+                    <include name="*" />
+                </fileset>
+            </copy>
+    </target>
 
 
 	<macrodef name="copy-replace" description="Copy text files and replace ant variables">

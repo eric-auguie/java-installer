@@ -19,9 +19,9 @@ case "$1" in
 			# fetch java binaries
 			chmod +x "$INSTALLER_FILE" && "$INSTALLER_FILE" fetch jdk
 			# remove existing java binaries
-			#rm -rv bin include jmods lib conf legal man
+			rm -rv bin include jmods lib conf legal man
 			# extract java binaries
-			#tar --strip-components=1 -vxzf *.tar.gz && rm -v *.tar.gz
+			tar --strip-components=1 -vxzf *.tar.gz && rm -v *.tar.gz
 		fi
 
 		# make sure that `java` is working

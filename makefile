@@ -1,9 +1,10 @@
-ANT := ant -lib lib
+ANT := ant -lib lib -v
 
 update:
 	$(ANT) clean
 	$(ANT) resolve
 	$(ANT) update-jdk
+	$(ANT) replaceTokens
 	$(ANT) build
 
 pkg:	
